@@ -4,7 +4,7 @@
   export let paused: boolean;
 </script>
 
-<button on:click>
+<button name={paused ? "Play" : "Pause"} on:click>
   {#if paused}
     <svg
       class="paused"

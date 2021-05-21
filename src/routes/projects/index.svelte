@@ -10,8 +10,6 @@
       pageSize: 12,
     });
 
-    console.log(query);
-
     return {
       props: {
         query,

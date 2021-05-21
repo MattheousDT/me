@@ -62,7 +62,11 @@
         {/if}
         <div class="space-between">
           <h5 class="color--accent">{projectTypeToString(data.type)}</h5>
-          <a href={data.link} class="button button--outline" target="_blank">View Project</a>
+          {#if data.link}
+            <a href={data.link} class="button button--outline" target="_blank" rel="noreferrer">
+              View Project
+            </a>
+          {/if}
         </div>
         <p class="description">{data.description}</p>
         <div class="row">
@@ -81,7 +85,7 @@
               <p class="color--accent">Next Project</p>
               <h5>{next.title}</h5>
             </div>
-            <ArrowButton flip />
+            <ArrowButton wrapped flip />
           </a>
         {/if}
       </div>

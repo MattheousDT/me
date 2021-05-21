@@ -13,7 +13,7 @@ export interface IProject {
   logo?: string;
   thumb: string;
   type: ProjectType;
-  link: string;
+  link?: string;
   description: string;
   stats: { title: string; body: string }[];
   images?: { url: string; alt?: string }[];
@@ -28,7 +28,7 @@ export const prismicToProject = (doc: Document): IProject => ({
   logo: doc.data.logo?.url,
   thumb: doc.data.thumb.url,
   type: ProjectType[doc.data.type],
-  link: doc.data.link.url,
+  link: doc.data.link?.url,
   description: doc.data.description,
   stats: doc.data.stats.map((e: any) => ({ title: e.stat_title, body: e.stat_text })),
   images: doc.data.images?.map((e: any) => ({ url: e.image.url, alt: e.image.alt })) ?? [],
