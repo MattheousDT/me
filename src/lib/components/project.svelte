@@ -3,9 +3,10 @@
   export let thumb: string;
   export let type: string;
   export let title: string;
+  export let forwardSlash = "projects";
 </script>
 
-<a href="/projects/{uid}">
+<a href="/{forwardSlash}/{uid}">
   <article>
     <img src={thumb} alt="" />
     <div>

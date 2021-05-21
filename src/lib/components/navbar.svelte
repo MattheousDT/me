@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
 
   const links = {
-    "About Me": "/about",
     Projects: "/projects",
     Blog: "/blog",
     contact: "/contact",
@@ -23,8 +22,11 @@
 
 <style lang="scss">
   nav {
+    position: absolute;
     padding: 30px 0;
-    height: 83px;
+    height: var(--nav-height);
+    width: 100%;
+    z-index: 999;
   }
 
   .container {

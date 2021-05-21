@@ -14,6 +14,8 @@
   --subtext: #c0c0c0;
   --accent: #1bf2c2;
   --accent-trans: rgba(27, 242, 194, 0.1);
+
+  --nav-height: 83px;
 }
 
 body {
@@ -33,7 +35,7 @@ body {
 main {
   position: relative;
   flex: 1;
-  overflow: hidden;
+  margin-top: var(--nav-height);
 }
 
 ::-webkit-scrollbar {

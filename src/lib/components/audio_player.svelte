@@ -10,7 +10,7 @@
   let duration: number,
     currentTime: number,
     paused = true,
-    volume: number;
+    volume = 0.3;
 
   $: percent = (currentTime / duration) * 100 || 0;
 
