@@ -1,0 +1,79 @@
+@import "mixins";
+
+.container {
+  width: 100%;
+  max-width: 1470px;
+  padding-right: 15px * 2;
+  padding-left: 15px * 2;
+  margin-right: auto;
+  margin-left: auto;
+
+  &.relative {
+    position: relative;
+  }
+
+  &--small {
+    max-width: 850px !important;
+  }
+
+  &--full {
+    max-width: 100% !important;
+    padding: 0 15px * 4;
+
+    @include media-down(xl) {
+      padding: 0 15px * 2;
+    }
+
+    @include media-down(sm) {
+      padding: 0 15px;
+    }
+  }
+
+  @include media-up(sm) {
+    max-width: 540px;
+  }
+  @include media-up(md) {
+    max-width: 720px;
+  }
+  @include media-up(lg) {
+    max-width: 960px;
+  }
+  @include media-up(xl) {
+    max-width: 1140px;
+  }
+  @include media-up(xxl) {
+    max-width: 1470px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.col,
+[class*="col-"] {
+  padding: 0 15px;
+}
+
+// Col Default Sizes
+@each $breakpoint-value in $breakpoint-values {
+  .col-#{$breakpoint-value} {
+    max-width: (100% / 12) * $breakpoint-value;
+    flex: 0 0 ((100% / 12) * $breakpoint-value);
+  }
+}
+
+// Col breakpoint sizes
+@each $breakpoint in map-keys($breakpoints) {
+  @each $breakpoint-value in $breakpoint-values {
+    @include media-up($breakpoint) {
+      .col-#{$breakpoint}-#{$breakpoint-value} {
+        max-width: (100% / 12) * $breakpoint-value;
+        flex: 0 0 ((100% / 12) * $breakpoint-value);
+      }
+    }
+  }
+}
