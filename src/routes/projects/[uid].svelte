@@ -1,9 +1,10 @@
 <script context="module">
+  import Prismic from "@prismicio/client";
   import api from "$lib/util/api";
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = async ({ page }) => {
-    let query = await api.getByUID("project", page.params.uid, { fetchLinks: "project.title" });
+    let query = await api.getByUID("project", page.params.uid, {});
 
     if (!query) {
       return {
@@ -12,9 +13,23 @@
       };
     }
 
+    let next = await api.queryFirst(
+      Prismic.predicates.dateBefore("my.project.date", new Date(query.data.date)),
+      {
+        fetch: "project.title",
+        orderings: "[my.project.date desc]",
+      }
+    );
+
     return {
       props: {
         data: prismicToProject(query),
+        next: next
+          ? {
+              uid: next.uid,
+              title: next.data.title,
+            }
+          : null,
       },
     };
   };
@@ -28,6 +43,7 @@
   import { prismicToProject } from "$lib/util/transfomers";
 
   export let data: IProject;
+  export let next: { uid: string; title: string };
 </script>
 
 <svelte:head>
@@ -59,11 +75,11 @@
         </div>
       </div>
       <div class="col-6 next-project-col">
-        {#if data.nextProject.title}
-          <a href="/projects/{data.nextProject.uid}" class="next-project">
+        {#if next}
+          <a href="/projects/{next.uid}" class="next-project">
             <div class="text">
               <p class="color--accent">Next Project</p>
-              <h5>{data.nextProject.title}</h5>
+              <h5>{next.title}</h5>
             </div>
             <ArrowButton flip />
           </a>

@@ -61,7 +61,9 @@
       }
 
       &.active,
-      &:hover {
+      &:hover,
+      &:focus {
+        outline: none;
         color: var(--accent);
       }
 
@@ -69,6 +71,7 @@
         width: 3px;
       }
 
+      &:focus::after,
       &:hover::after {
         width: 100%;
         transition: width 250ms cubic-bezier(0.26, 1.29, 0.7, 1.18);

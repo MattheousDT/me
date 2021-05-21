@@ -19,10 +19,6 @@ export interface IProject {
   images?: { url: string; alt?: string }[];
   marginIndex: number;
   audio?: { title: string; url: string }[];
-  nextProject?: {
-    title: string;
-    uid: string;
-  };
 }
 
 export const prismicToProject = (doc: Document): IProject => ({
@@ -38,10 +34,6 @@ export const prismicToProject = (doc: Document): IProject => ({
   images: doc.data.images?.map((e: any) => ({ url: e.image.url, alt: e.image.alt })) ?? [],
   marginIndex: doc.data.image_margin,
   audio: doc.data.music?.map((e: any) => ({ title: e.audio.name.slice(5, -4), url: e.audio.url })),
-  nextProject: {
-    title: doc.data.next_project.data?.title,
-    uid: doc.data.next_project.uid,
-  },
 });
 
 export const projectTypeToString = (type: ProjectType): string => {

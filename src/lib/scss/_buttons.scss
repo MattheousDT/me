@@ -9,7 +9,9 @@
   background: transparent;
   transition: background 150ms ease, color 250ms ease;
 
-  &:hover {
+  &:hover,
+  &:focus {
+    outline: none;
     background: var(--accent);
     color: var(--background) !important;
   }

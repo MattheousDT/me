@@ -1,16 +1,16 @@
 <script>
-  import type { IProject } from "$lib/util/transformers";
-  import { projectTypeToString } from "$lib/util/transfomers";
-
-  export let project: IProject;
+  export let uid: string;
+  export let thumb: string;
+  export let type: string;
+  export let title: string;
 </script>
 
-<a href="/projects/{project.uid}">
+<a href="/projects/{uid}">
   <article>
-    <img src={project.thumb} alt="" />
+    <img src={thumb} alt="" />
     <div>
-      <h6 class="color--accent">{projectTypeToString(project.type)}</h6>
-      <h4>{project.title}</h4>
+      <h6 class="color--accent">{type}</h6>
+      <h4>{title}</h4>
     </div>
   </article>
 </a>
@@ -18,6 +18,7 @@
 <style lang="scss">
   article {
     position: relative;
+    margin-bottom: 60px;
   }
 
   img {
@@ -44,7 +45,10 @@
     transition: color 250ms ease;
   }
 
-  a:hover {
+  a:hover,
+  a:focus {
+    outline: none;
+
     div {
       background: var(--accent);
     }

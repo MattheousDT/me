@@ -43,7 +43,9 @@
     cursor: pointer;
     transition: background 150ms ease;
 
-    &:hover {
+    &:hover,
+    &:focus {
+      outline: none;
       background: var(--accent);
 
       path {
