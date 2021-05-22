@@ -84,6 +84,11 @@
         <button
           class="track"
           on:click={() => {
+            // epic extra logic because lukasz hates me
+            if (selected === track) {
+              return (currentTime = 0);
+            }
+
             paused = true;
             selected = track;
             // this is dumb
