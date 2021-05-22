@@ -1,4 +1,5 @@
 <script>
+  import { spring } from "svelte/motion";
   import PlayButton from "./buttons/play_button.svelte";
   import Waveform from "./waveform.svelte";
 
@@ -12,9 +13,14 @@
     paused = true,
     volume = 0.3;
 
-  $: percent = (currentTime / duration) * 100 || 0;
+  let percent = spring((currentTime / duration) * 100 || 0, {
+    stiffness: 0.3,
+    damping: 0.7,
+  });
 
-  function handleMousemove(e) {
+  $: percent.set((currentTime / duration) * 100 || 0);
+
+  function handleMousemove(e: MouseEvent) {
     if (!(e.buttons & 1)) return; // mouse not down
     if (!duration) return; // audio not loaded yet
 
@@ -64,8 +70,8 @@
     </div>
     <div class="playbar-wrapper" on:mousemove={handleMousemove} on:mousedown={handleMousedown}>
       <div class="playbar">
-        <div class="progress" style="width: {percent}%;" />
-        <div class="nub" style="left:{percent}%;" />
+        <div class="progress" style="width: {$percent}%;" />
+        <div class="nub" style="left:{$percent}%;" />
       </div>
     </div>
     <div class="tracklist">

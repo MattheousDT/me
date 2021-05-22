@@ -150,6 +150,7 @@
 
     p {
       max-width: 714px;
+      margin-bottom: 60px;
     }
   }
 
