@@ -1,6 +1,4 @@
 <script context="module">
-  import Prismic from "@prismicio/client";
-  import api from "$lib/util/api";
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = async ({ page }) => {
@@ -19,30 +17,133 @@
 </script>
 
 <script>
+  import { fly } from "svelte/transition";
+  import Prismic from "@prismicio/client";
+  import api from "$lib/util/api";
   import type ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
-  import ArrowButton from "$lib/components/buttons/arrow_button.svelte";
   import { projectTypeToString } from "$lib/util/transfomers";
   import { ProjectType } from "$lib/util/transfomers";
   import Project from "$lib/components/project.svelte";
+  import Multiselect from "$lib/components/forms/multiselect.svelte";
+  import { browser } from "$app/env";
 
   export let query: ApiSearchResponse;
+
+  let promiseResults: Promise<ApiSearchResponse> = null;
+
+  $: {
+    promiseResults = api.query(
+      [
+        Prismic.Predicates.at("document.type", "project"),
+        Prismic.Predicates.any("my.project.type", types),
+        // TODO: Search
+        //Prismic.Predicates.fulltext("document", "forum"),
+      ],
+      {
+        fetch: ["project.title", "project.type", "project.thumb"],
+        orderings: "[my.project.date desc]",
+        pageSize: 12,
+      }
+    );
+  }
+
+  let types = [];
 </script>
 
 <svelte:head>
   <title>Projects | Matthew Watt</title>
 </svelte:head>
 
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Projects</h1>
+        <p>
+          Vel mauris turpis elit tristique cursus. Phasellus nunc purus massa consectetur lacus
+          risus. Nisi, amet, viverra sagittis, proin ultrices nibh.
+        </p>
+
+        <div class="filters">
+          <Multiselect
+            options={[
+              { friendly: "Web Development", value: ProjectType.web },
+              { friendly: "UI/UX Design", value: ProjectType.design },
+              { friendly: "Music Production", value: ProjectType.music },
+            ]}
+            bind:selected={types}
+          />
+          <button on:click={() => (types = [])} class="button" disabled={types.length == 0}>
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<img class="swoosh" src="/svg/project_listing_swoosh.svg" alt="" />
+
 <div class="container">
   <div class="row">
-    {#each query.results as doc}
-      <div class="col-4">
-        <Project
-          thumb={doc.data.thumb.url}
-          title={doc.data.title}
-          type={projectTypeToString(ProjectType[doc.data.type])}
-          uid={doc.uid}
-        />
-      </div>
-    {/each}
+    {#await promiseResults}
+      <!-- promiseResults is pending -->
+      <p>Pending</p>
+    {:then value}
+      {#each value.results as doc, i}
+        <div in:fly={{ y: 20, duration: 250, delay: i * 50 }} class="col-4">
+          <Project
+            thumb={doc.data.thumb.url}
+            title={doc.data.title}
+            type={projectTypeToString(ProjectType[doc.data.type])}
+            uid={doc.uid}
+          />
+        </div>
+      {/each}
+    {:catch error}
+      <pre>{error}</pre>
+    {/await}
+
+    <!-- Server Rendered Results -->
+    {#if !browser}
+      {#each query.results as doc}
+        <div class="col-4" style="display: none;">
+          <Project
+            thumb={doc.data.thumb.url}
+            title={doc.data.title}
+            type={projectTypeToString(ProjectType[doc.data.type])}
+            uid={doc.uid}
+          />
+        </div>
+      {/each}
+    {/if}
   </div>
 </div>
+
+<style lang="scss">
+  header {
+    padding: 112px 0 60px;
+
+    p {
+      max-width: 714px;
+    }
+  }
+
+  h1 {
+    margin: 0 0 20px;
+  }
+  .swoosh {
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 551px;
+    object-fit: cover;
+    object-position: left;
+
+    @media (min-width: 1920px) {
+      object-fit: cover;
+      height: auto !important;
+      object-position: center;
+    }
+  }
+</style>

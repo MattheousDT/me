@@ -7,6 +7,7 @@
   border: 2px solid var(--accent);
   line-height: 113%;
   background: transparent;
+  cursor: pointer;
   transition: background 150ms ease, color 250ms ease;
 
   &:hover,
@@ -14,5 +15,12 @@
     outline: none;
     background: var(--accent);
     color: var(--background) !important;
+  }
+
+  &:disabled {
+    color: var(--disabled) !important;
+    background: transparent !important;
+    border-color: var(--disabled) !important;
+    cursor: not-allowed;
   }
 }
