@@ -94,6 +94,8 @@
 </div>
 
 <style lang="scss">
+  @import "../scss/mixins";
+
   * {
     user-select: none;
   }
@@ -108,6 +110,17 @@
     min-height: 311px;
     margin: 150px 0 250px;
 
+    @include media-down(sm) {
+      margin-top: 40%;
+      width: 100%;
+      padding: 30px;
+    }
+
+    @include media-down(xs) {
+      flex-direction: column;
+      padding: 20px;
+    }
+
     .play-button {
       padding-top: 23px;
     }
@@ -115,6 +128,10 @@
     .contents {
       margin-left: 30px;
       flex: 1;
+
+      @include media-down(xs) {
+        margin: 30px 0 0 0;
+      }
     }
   }
 
@@ -124,6 +141,15 @@
     top: -60px;
     right: -30px;
     border-radius: 20px;
+
+    @include media-down(sm) {
+      margin-bottom: 20px;
+      z-index: -1;
+      width: 100%;
+      left: 30px;
+      bottom: 10px;
+      top: unset;
+    }
   }
 
   .currently-playing-text {
@@ -171,6 +197,10 @@
 
   .tracklist {
     margin: 30px 0 0 -20px;
+
+    @include media-down(xs) {
+      margin: 30px -20px 0 -20px;
+    }
   }
 
   .track {

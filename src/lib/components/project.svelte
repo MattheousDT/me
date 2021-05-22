@@ -17,6 +17,8 @@
 </a>
 
 <style lang="scss">
+  @import "../scss/mixins";
+
   article {
     position: relative;
     margin-bottom: 60px;
@@ -27,6 +29,18 @@
     height: 280px;
     object-fit: cover;
     border-radius: 20px;
+
+    @include media-down(md) {
+      height: 200px;
+    }
+
+    @include media-down(sm) {
+      height: 250px;
+    }
+
+    @include media-down(xs) {
+      height: 200px;
+    }
   }
 
   div {
@@ -38,12 +52,22 @@
     right: 0;
     bottom: -30px + 10px;
     transition: background 250ms ease;
+
+    @include media-down(md) {
+      padding: 20px;
+    }
   }
 
   h6,
   h4 {
     margin: 0;
     transition: color 250ms ease;
+  }
+
+  h4 {
+    @include media-down(md) {
+      font-size: 1.5rem;
+    }
   }
 
   a:hover,

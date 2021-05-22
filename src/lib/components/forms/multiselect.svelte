@@ -69,11 +69,12 @@
   .dropdown-container {
     position: relative;
     display: inline-block;
-    margin-right: 20px;
+    max-width: 338px;
+    width: 100%;
   }
 
   button {
-    width: 338px;
+    width: 100%;
     border-color: var(--card);
     background: var(--card);
     color: var(--text);
@@ -87,7 +88,7 @@
       text-overflow: ellipsis;
       width: 100%;
       padding-right: 30px;
-      margin: -4px;
+      margin: -5px 0 -6px;
     }
 
     .arrow {

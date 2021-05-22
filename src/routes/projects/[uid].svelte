@@ -53,7 +53,7 @@
 <header>
   <div class="container">
     <div class="row">
-      <div class="col-6">
+      <div class="col-lg-7 col-xl-6">
         <ArrowButton href="/projects" />
         {#if data.logo}
           <img class="logo" src={data.logo} alt={data.title} />
@@ -69,7 +69,7 @@
           {/if}
         </div>
         <p class="description">{data.description}</p>
-        <div class="row">
+        <div class="row stats">
           {#each data.stats as { title, body }}
             <div class="col-{12 / data.stats.length} stat">
               <h6 class="color--accent">{title}</h6>
@@ -78,7 +78,7 @@
           {/each}
         </div>
       </div>
-      <div class="col-6 next-project-col">
+      <div class="col-lg-4 col-xl-6 next-project-col">
         {#if next}
           <a href="/projects/{next.uid}" class="next-project">
             <div class="text">
@@ -116,8 +116,18 @@
 <img class="swoosh footer" src="/svg/footer_swoosh.svg" alt="" />
 
 <style lang="scss">
+  @import "../../lib/scss/mixins";
+
   header {
     padding-top: 40px;
+
+    .row {
+      justify-content: space-between;
+
+      @include media-down(md) {
+        justify-content: flex-end;
+      }
+    }
   }
 
   .logo {
@@ -141,6 +151,12 @@
 
   .description {
     margin-bottom: 35px;
+  }
+
+  .stats {
+    @include media-down(sm) {
+      margin-bottom: 20px;
+    }
   }
 
   .stat {
