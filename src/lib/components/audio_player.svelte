@@ -86,7 +86,9 @@
           on:click={() => {
             // epic extra logic because lukasz hates me
             if (selected === track) {
-              return (currentTime = 0);
+              currentTime = 0;
+              paused = false;
+              return;
             }
 
             paused = true;
