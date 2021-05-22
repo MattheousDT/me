@@ -33,6 +33,11 @@
       cancel();
     }
 
+    if (!duration) return; // audio not loaded yet
+
+    const { left, right } = this.getBoundingClientRect();
+    currentTime = (duration * (e.clientX - left)) / (right - left);
+
     function cancel() {
       e.target.removeEventListener("mouseup", handleMouseup);
     }
