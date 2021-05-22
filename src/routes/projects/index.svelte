@@ -69,8 +69,8 @@
       <div class="col-12">
         <h1>Projects</h1>
         <p>
-          {searchValue} Vel mauris turpis elit tristique cursus. Phasellus nunc purus massa consectetur
-          lacus risus. Nisi, amet, viverra sagittis, proin ultrices nibh.
+          Vel mauris turpis elit tristique cursus. Phasellus nunc purus massa consectetur lacus
+          risus. Nisi, amet, viverra sagittis, proin ultrices nibh.
         </p>
 
         <div class="filters">

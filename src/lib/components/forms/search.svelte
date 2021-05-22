@@ -15,7 +15,7 @@
 
 <div class="search">
   <form on:submit|preventDefault={submit}>
-    <input on:blur={submit} type="search" bind:value />
+    <input placeholder="Search keywords..." on:blur={submit} type="search" bind:value />
   </form>
 
   {#if value}
@@ -85,6 +85,10 @@
     transition: background 150ms ease, color 250ms ease;
     appearance: none;
     padding-right: 50px;
+
+    &::placeholder {
+      color: var(--subtext);
+    }
 
     &::-ms-clear {
       display: none;
