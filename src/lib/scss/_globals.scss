@@ -48,7 +48,10 @@ main {
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--card);
+  background: var(--disabled);
+}
+::-webkit-scrollbar-thumb:active {
+  background: var(--accent);
 }
 ::-webkit-scrollbar-track {
   background: var(--background);

@@ -69,8 +69,8 @@
       <div class="col-12">
         <h1>Projects</h1>
         <p>
-          Vel mauris turpis elit tristique cursus. Phasellus nunc purus massa consectetur lacus
-          risus. Nisi, amet, viverra sagittis, proin ultrices nibh.
+          A collection of my work from over the years. The work included here is only work I have
+          played a substantial role in. New projects being added as I go.
         </p>
 
         <div class="filters">
@@ -134,6 +134,12 @@
           />
         </div>
       {/each}
+
+      {#if query.results_size === 0}
+        <div class="col-12">
+          <h4 class="error-text">No results found :(</h4>
+        </div>
+      {/if}
     {/if}
   </div>
 </div>
@@ -165,7 +171,15 @@
     width: 100%;
     height: 551px;
     object-fit: cover;
-    object-position: left;
+    object-position: 20%;
+
+    @include media-down(lg) {
+      margin-top: -60px;
+    }
+
+    @include media-down(md) {
+      margin-top: -160px;
+    }
 
     @media (min-width: 1920px) {
       object-fit: cover;

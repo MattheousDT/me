@@ -4,6 +4,7 @@ export enum ProjectType {
   web = "web",
   design = "design",
   music = "music",
+  video = "video",
 }
 
 export interface IProject {
@@ -44,6 +45,8 @@ export const projectTypeToString = (type: ProjectType): string => {
       return "UI/UX Design";
     case ProjectType.music:
       return "Music Production";
+    case ProjectType.video:
+      return "Motion Graphics";
     default:
       throw new Error();
   }

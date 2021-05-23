@@ -29,8 +29,11 @@
   import PrismicDOM from "prismic-dom";
   import length from "$lib/util/length";
   import ArrowButton from "$lib/components/buttons/arrow_button.svelte";
+  import blogDate from "$lib/util/blog_date";
 
   export let doc: Document;
+
+  let date = new Date(doc.data.date);
 </script>
 
 <svelte:head>
@@ -56,12 +59,8 @@
       <div class="col-12">
         <ArrowButton href="/blog" />
         <h5 class="color--accent">
-          <time datetime={new Date(doc.data.date).toISOString()}>
-            {new Date(doc.data.date).toLocaleDateString("en-GB", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric",
-            })}
+          <time datetime={date.toISOString()}>
+            {blogDate(date)}
           </time>
           · {length(doc.data.text.reduce((a, b) => a + b.text, ""))}
         </h5>

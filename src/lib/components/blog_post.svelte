@@ -1,17 +1,26 @@
 <script>
+  import blogDate from "$lib/util/blog_date";
+
   export let uid: string;
-  export let thumb: string;
-  export let type: string;
   export let title: string;
-  export let forwardSlash = "projects";
+  export let date: Date;
+  export let abstract: string;
+  export let thumb: string;
+  export let tags: string[];
 </script>
 
-<a href="/{forwardSlash}/{uid}">
+<a href="/blog/{uid}">
   <article>
     <img src={thumb} alt="" />
     <div>
-      <h6 class="color--accent">{type}</h6>
+      <h6 class="color--accent">
+        {blogDate(date)}
+      </h6>
       <h4>{title}</h4>
+      <p>{abstract}</p>
+      {#each tags as tag}
+        <span class="tag">#{tag}</span>
+      {/each}
     </div>
   </article>
 </a>
@@ -19,43 +28,49 @@
 <style lang="scss">
   @import "../scss/mixins";
 
+  a {
+    text-decoration: none;
+  }
+
   article {
     position: relative;
     margin-bottom: 60px;
     transition: transform 250ms ease;
+
+    @include media-down(sm) {
+      margin-bottom: 30px;
+    }
   }
 
   img {
-    width: calc(100% - 30px);
-    height: 280px;
+    position: absolute;
+    width: 33%;
+    height: 241px;
     object-fit: cover;
     border-radius: 20px;
-
-    @include media-down(md) {
-      height: 200px;
-    }
+    top: -30px;
+    right: 0px;
+    z-index: 1;
 
     @include media-down(sm) {
-      height: 250px;
-    }
-
-    @include media-down(xs) {
-      height: 200px;
+      display: none;
     }
   }
 
   div {
-    position: absolute;
     background: var(--card);
     border-radius: 20px;
-    padding: 30px;
+    padding: 30px 33% 30px 30px;
     width: calc(100% - 30px);
-    right: 0;
-    bottom: -30px + 10px;
     transition: box-shadow 250ms ease;
 
     @include media-down(md) {
+      padding: 20px 33% 20px 20px;
+    }
+
+    @include media-down(sm) {
       padding: 20px;
+      width: 100%;
     }
   }
 
@@ -69,6 +84,12 @@
     @include media-down(md) {
       font-size: 1.5rem;
     }
+  }
+
+  .tag {
+    color: var(--subtext);
+    margin-right: 5px;
+    font-size: 0.9rem;
   }
 
   a:hover,
