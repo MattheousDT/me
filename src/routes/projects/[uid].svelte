@@ -133,7 +133,7 @@
   .logo {
     max-height: 140px;
     max-width: 100%;
-    height: 100%;
+    height: auto;
     margin: 40px 0 10px;
   }
 

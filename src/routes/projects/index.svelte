@@ -2,11 +2,19 @@
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = async ({ page }) => {
-    let query = await api.query(Prismic.Predicates.at("document.type", "project"), {
-      fetch: ["project.title", "project.type", "project.thumb"],
-      orderings: "[my.project.date desc]",
-      pageSize: 12,
-    });
+    let types = page.query.get("types")?.split(",") ?? [];
+
+    let query = await api.query(
+      [
+        Prismic.Predicates.at("document.type", "project"),
+        Prismic.Predicates.any("my.project.type", types),
+      ],
+      {
+        fetch: ["project.title", "project.type", "project.thumb"],
+        orderings: "[my.project.date desc]",
+        pageSize: 12,
+      }
+    );
 
     return {
       props: {
@@ -28,6 +36,7 @@
   import { browser } from "$app/env";
   import Search from "$lib/components/forms/search.svelte";
   import ProjectSkeleton from "$lib/components/project_skeleton.svelte";
+  import { page } from "$app/stores";
 
   export let query: ApiSearchResponse;
 
@@ -48,7 +57,7 @@
     );
   }
 
-  let types = [];
+  let types = $page.query.get("types")?.split(",") ?? [];
   let searchValue = "";
   let liveSearchValue = "";
 
