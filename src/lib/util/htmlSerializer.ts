@@ -13,7 +13,23 @@ const htmlSerializer = (type, element, content, children) => {
     case Elements.paragraph:
       if (element.text === "") return `<br>`;
       return null;
+    case Elements.em:
+      console.log(content);
+      if (content.startsWith("`")) {
+        const block: string = content.slice(1, -1);
+        const lang = block.split(" ")[0];
+        let code = block.split(" ");
+        code.shift();
+
+        return `<code class="language-${lang} inline">${Prism.highlight(
+          code.join("\n"),
+          Prism.languages[lang],
+          lang
+        )}</code>`;
+      }
+      return null;
     case Elements.preformatted:
+      // Code block
       if (element.text?.startsWith("```")) {
         const block: string = element.text.slice(3, -3);
         const lang = block.split("\n")[0];
@@ -26,6 +42,7 @@ const htmlSerializer = (type, element, content, children) => {
           lang
         )}</code>`;
       }
+      // Quote
       return `<blockquote class="full-width">${children}</blockquote>`;
 
     // Don't wrap images in a <p> tag

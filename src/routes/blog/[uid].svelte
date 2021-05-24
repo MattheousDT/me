@@ -197,20 +197,35 @@
     }
 
     code {
-      padding: 30px !important;
-      border-radius: 20px 30px !important;
+      padding: 20px 30px !important;
+      border-radius: 20px !important;
       white-space: pre-wrap !important;
       word-break: break-all !important;
+      background: var(--card) !important;
 
       @include media-down(md) {
         padding: 20px !important;
       }
 
+      &,
       * {
         font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
-        font-size: 1rem;
+        font-size: 1rem !important;
         @include media-down(sm) {
-          font-size: 0.9rem;
+          font-size: 0.9rem !important;
+        }
+      }
+
+      &.inline {
+        white-space: unset !important;
+        display: inline-block;
+        padding: 3px 7px !important;
+        border-radius: 7px !important;
+
+        &,
+        * {
+          font-size: 1rem !important;
+          line-height: 1.5 !important;
         }
       }
     }
