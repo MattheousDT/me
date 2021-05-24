@@ -10,7 +10,7 @@
           <h2>Hey, I'm Matt!</h2>
           <h1>Let's work together...</h1>
           <div class="buttons">
-            <a href="/project" class="button button--dark">View my projects</a>
+            <a href="/projects" class="button button--dark">View my projects</a>
             <a href="/contact" class="button button--dark">Get in touch</a>
           </div>
         </div>
