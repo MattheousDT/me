@@ -73,8 +73,7 @@
     </div>
   </div>
 </header>
-
-<div class="container">
+<div class="container body">
   <div class="row">
     <div class="col-12">
       <div class="html">
@@ -86,6 +85,13 @@
 
 <style lang="scss">
   @import "../../lib/scss/mixins";
+
+  .container.body {
+    @include media-up(xxl) {
+      max-width: 1100px;
+    }
+  }
+
   header {
     position: relative;
     padding: calc(40px + var(--nav-height)) 0 120px;
@@ -128,7 +134,7 @@
     margin-bottom: 120px;
 
     > :not(.full-width) {
-      max-width: 80%;
+      max-width: calc(100% - 60px);
       margin-left: auto;
       margin-right: auto;
 
