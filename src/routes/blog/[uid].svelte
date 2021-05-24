@@ -1,5 +1,9 @@
 <script context="module">
+  import PrismicDOM from "prismic-dom";
+  import htmlSerializer from "$lib/util/htmlSerializer";
+  import linkResolver from "$lib/util/linkResolver";
   import api from "$lib/util/api";
+
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = async ({ page }) => {
@@ -12,8 +16,6 @@
       };
     }
 
-    console.log(query);
-
     return {
       props: {
         doc: query,
@@ -24,9 +26,6 @@
 
 <script>
   import type { Document } from "@prismicio/client/types/documents";
-  import linkResolver from "$lib/util/linkResolver";
-  import htmlSerializer from "$lib/util/htmlSerializer";
-  import PrismicDOM from "prismic-dom";
   import length from "$lib/util/length";
   import ArrowButton from "$lib/components/buttons/arrow_button.svelte";
   import blogDate from "$lib/util/blog_date";
@@ -50,6 +49,11 @@
   <meta name="twitter:image" content={doc.data.featured_image.meta.url} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image:alt" content={doc.data.featured_image.alt} />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/prism-theme-one-dark@1.0.0/prism-onedark.css"
+    rel="stylesheet"
+  />
 </svelte:head>
 
 <header>
@@ -81,11 +85,17 @@
 </div>
 
 <style lang="scss">
+  @import "../../lib/scss/mixins";
   header {
     position: relative;
     padding: calc(40px + var(--nav-height)) 0 120px;
     margin-bottom: 60px;
     margin-top: calc(0px - var(--nav-height));
+
+    @include media-down(md) {
+      margin-bottom: 30px;
+      padding-bottom: 60px;
+    }
 
     img {
       z-index: -1;
@@ -121,10 +131,25 @@
       max-width: 80%;
       margin-left: auto;
       margin-right: auto;
+
+      @include media-down(md) {
+        max-width: 100%;
+      }
     }
 
     .full-width {
+      display: block;
       margin: 40px 0;
+
+      @include media-down(md) {
+        width: calc(100% + 60px);
+        margin-left: -30px;
+      }
+
+      @include media-down(xs) {
+        width: 100%;
+        margin-left: 0;
+      }
     }
 
     img {
@@ -136,6 +161,10 @@
     figcaption {
       margin: 0 30px;
       font-style: italic;
+
+      @include media-down(xs) {
+        margin: 0;
+      }
     }
 
     strong {
@@ -155,6 +184,29 @@
       border-radius: 20px;
       border: 2px solid var(--accent);
       background: transparent;
+
+      @include media-down(md) {
+        padding: 20px;
+      }
+    }
+
+    code {
+      padding: 30px !important;
+      border-radius: 20px 30px !important;
+      white-space: pre-wrap !important;
+      word-break: break-all !important;
+
+      @include media-down(md) {
+        padding: 20px !important;
+      }
+
+      * {
+        font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-size: 1rem;
+        @include media-down(sm) {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
 </style>

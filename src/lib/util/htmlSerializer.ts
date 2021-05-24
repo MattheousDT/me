@@ -1,5 +1,10 @@
 import PrismicDOM from "prismic-dom";
 import Prism from "prismjs";
+import "prism-svelte";
+import "prismjs/components/prism-scss.js";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-dart";
+
 const Elements = PrismicDOM.RichText.Elements;
 
 const htmlSerializer = (type, element, content, children) => {
@@ -10,15 +15,16 @@ const htmlSerializer = (type, element, content, children) => {
       return null;
     case Elements.preformatted:
       if (element.text?.startsWith("```")) {
-        // const block = element.text.slice(3, -3);
-        // const language = block.split("\n")[0];
-        // const highlighted = Prism.highlight(
-        //   block.slice(language.length - 1),
-        //   Prism.languages[language],
-        //   language
-        // );
-        // return `<code>${highlighted}</code>`;
-        return null;
+        const block: string = element.text.slice(3, -3);
+        const lang = block.split("\n")[0];
+        let code = block.split("\n");
+        code.shift();
+
+        return `<code class="language-${lang} full-width">${Prism.highlight(
+          code.join("\n"),
+          Prism.languages[lang],
+          lang
+        )}</code>`;
       }
       return `<blockquote class="full-width">${children}</blockquote>`;
 

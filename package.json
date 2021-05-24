@@ -20,6 +20,7 @@
     "eslint-plugin-svelte3": "^3.2.0",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
+    "prism-svelte": "^0.4.7",
     "prismic-dom": "^2.2.5",
     "prismjs": "^1.23.0",
     "sass": "^1.32.13",

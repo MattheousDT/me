@@ -48,7 +48,9 @@
   export let projectQuery: ApiSearchResponse;
 </script>
 
-<svelte:head />
+<svelte:head>
+  <title>Matthew Watt</title>
+</svelte:head>
 
 <Jumbotron />
 <div class="container">
