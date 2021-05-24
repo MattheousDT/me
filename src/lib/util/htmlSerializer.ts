@@ -2,8 +2,8 @@ import PrismicDOM from "prismic-dom";
 import Prism from "prismjs";
 import "prism-svelte";
 import "prismjs/components/prism-scss.js";
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-dart";
+import "prismjs/components/prism-typescript.js";
+import "prismjs/components/prism-dart.js";
 
 const Elements = PrismicDOM.RichText.Elements;
 
