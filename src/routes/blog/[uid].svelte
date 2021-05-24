@@ -210,6 +210,7 @@
       &,
       * {
         font-family: "Fira Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+        font-variant-ligatures: none;
         font-size: 1rem !important;
         @include media-down(sm) {
           font-size: 0.9rem !important;
