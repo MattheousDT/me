@@ -22,9 +22,20 @@
   import { fly } from "svelte/transition";
 
   export let key: string;
+
+  let keywords = "JavaScript, CSS, front-end, web design";
+  let img = "https://matthewwatt.co.uk/logo.png";
 </script>
 
-<svelte:head />
+<svelte:head>
+  <meta name="keywords" content={keywords} />
+  <meta name="content" content={keywords} />
+  <meta name="property" content={keywords} />
+
+  <meta property="og:image" content={img} />
+  <meta name="twitter:image" content={img} />
+  <meta name="twitter:card" content="summary" />
+</svelte:head>
 
 <Navbar />
 {#key key}
