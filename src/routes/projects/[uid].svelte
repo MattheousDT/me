@@ -68,7 +68,7 @@
             </a>
           {/if}
         </div>
-        <p class="description">{data.description}</p>
+        <p class="description">{@html data.description.replace(/\n/g, "<br>")}</p>
         <div class="row stats">
           {#each data.stats as { title, body }}
             <div class="col-{12 / data.stats.length} stat">
