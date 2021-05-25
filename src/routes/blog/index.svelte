@@ -176,6 +176,7 @@
     height: 551px;
     object-fit: cover;
     object-position: top;
+    user-select: none;
 
     @media (min-width: 1920px) {
       object-fit: cover;

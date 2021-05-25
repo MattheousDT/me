@@ -10,6 +10,7 @@
   background: transparent;
   cursor: pointer;
   transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  user-select: none;
 
   &:hover,
   &:focus {

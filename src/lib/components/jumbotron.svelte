@@ -36,13 +36,31 @@
   h2 {
     margin: 0;
     color: var(--background);
+
+    &::selection {
+      color: var(--accent);
+      background: var(--background);
+    }
   }
 
   .buttons {
     margin-top: 20px;
 
+    @include media-down(sm) {
+      display: flex;
+      flex-direction: column;
+
+      > * {
+        width: max-content;
+      }
+    }
+
     :first-child {
       margin-right: 15px;
+
+      @include media-down(sm) {
+        margin: 0 0 15px 0;
+      }
     }
   }
 
@@ -52,18 +70,19 @@
     z-index: -1;
     width: 100%;
     object-fit: cover;
+    user-select: none;
 
     &.top {
       // I have no idea how this works but it does
       height: calc(135px + 1vw);
-      top: 1px;
+      top: 2px;
       transform: translateY(-100%);
       object-position: bottom;
     }
 
     &.bottom {
       height: calc(284px + 10vw);
-      bottom: 1px;
+      bottom: 2px;
       transform: translateY(100%);
       object-position: top;
     }

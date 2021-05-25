@@ -191,6 +191,12 @@
       border: 2px solid var(--accent);
       background: transparent;
 
+      &::selection,
+      *::selection {
+        background: var(--accent);
+        color: var(--background);
+      }
+
       @include media-down(md) {
         padding: 20px;
       }
@@ -202,6 +208,12 @@
       white-space: pre-wrap !important;
       word-break: break-all !important;
       background: var(--card) !important;
+
+      &::selection,
+      *::selection {
+        background: var(--accent) !important;
+        color: var(--background) !important;
+      }
 
       @include media-down(md) {
         padding: 20px !important;

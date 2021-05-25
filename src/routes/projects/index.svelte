@@ -181,6 +181,7 @@
     height: 551px;
     object-fit: cover;
     object-position: 20%;
+    user-select: none;
 
     @include media-down(lg) {
       margin-top: -60px;

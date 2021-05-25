@@ -31,6 +31,7 @@
     cursor: pointer;
     text-decoration: none;
     margin: 0 auto 120px;
+    user-select: none;
 
     &.marginTop {
       margin-top: 30px;

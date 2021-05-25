@@ -88,6 +88,7 @@
 
     &::placeholder {
       color: var(--subtext);
+      user-select: none;
     }
 
     &::-ms-clear {

@@ -48,6 +48,7 @@
   .client {
     padding: 0 15px;
     margin-bottom: 50px;
+    user-select: none;
 
     @include media-down(sm) {
       margin-bottom: 10px;
@@ -60,6 +61,7 @@
     z-index: -1;
     width: 100%;
     object-fit: cover;
+    user-select: none;
 
     &.top {
       height: 84px;

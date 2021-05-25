@@ -145,9 +145,17 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-
     h5 {
       margin-bottom: 0;
+    }
+
+    @include media-down(xs) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      h5 {
+        margin-bottom: 30px;
+      }
     }
   }
 
@@ -208,6 +216,7 @@
     height: 551px;
     object-fit: cover;
     object-position: right;
+    user-select: none;
 
     &.footer {
       height: 150px;

@@ -42,6 +42,7 @@
     height: 60px;
     cursor: pointer;
     transition: background 150ms ease;
+    user-select: none;
 
     &:hover,
     &:focus {
