@@ -1,10 +1,12 @@
 <script>
+  // https://www.w3.org/TR/wai-aria-practices/examples/menubar/menubar-1/menubar-1.html
+
   import { page } from "$app/stores";
 
   const links = {
     Projects: "/projects",
     Blog: "/blog",
-    contact: "/contact",
+    //Contact: "/contact",
   };
 </script>
 
@@ -13,10 +15,14 @@
     <a class="logo" href="/">
       <img src="/svg/logo.svg" alt="Go home" />
     </a>
-    <ul role="navigation">
-      <li><a class:active={$page.path === "/"} href="/">Home</a></li>
+    <ul role="menubar" aria-label="Main navigation menu">
+      <li role="none">
+        <a role="menuitem" class:active={$page.path === "/"} href="/">Home</a>
+      </li>
       {#each Object.entries(links) as [title, link]}
-        <li><a class:active={$page.path.startsWith(link)} href={link}>{title}</a></li>
+        <li role="none">
+          <a role="menuitem" class:active={$page.path.startsWith(link)} href={link}>{title}</a>
+        </li>
       {/each}
     </ul>
   </div>

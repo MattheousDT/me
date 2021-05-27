@@ -7,7 +7,7 @@
     hop: ["Houses of Parliament", "https://www.parliament.uk/"],
     enersys: ["Enersys", "https://enersys.com"],
     falni: ["Forum for Adult Learning Northern Ireland", "https://falni.org"],
-    mp: ["Mortgage Propeller", "https://mortagagepropeller.com"],
+    mp: ["Mortgage Propeller", "https://mortgagepropeller.com"],
     eason: ["Eason & Sons", "https://eason.com"],
     feinwaru: ["Feinwaru Software", "https://feinwaru.com"],
   };

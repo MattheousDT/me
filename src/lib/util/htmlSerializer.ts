@@ -14,7 +14,6 @@ const htmlSerializer = (type, element, content, children) => {
       if (element.text === "") return `<br>`;
       return null;
     case Elements.em:
-      console.log(content);
       if (content.startsWith("`")) {
         const block: string = content.slice(1, -1);
         const lang = block.split(" ")[0];

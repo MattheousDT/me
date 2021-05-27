@@ -125,7 +125,7 @@
 
     h1 {
       font-size: 3.157rem;
-      max-width: 1016px;
+      max-width: 720px;
       margin: 0;
     }
   }
@@ -175,12 +175,26 @@
 
     strong {
       font-weight: 800;
+      color: var(--accent);
+    }
+
+    em {
+      font-family: Georgia, serif;
+      color: var(--accent);
     }
 
     h3,
-    h4,
-    a {
+    h4 {
       color: var(--accent);
+    }
+
+    a {
+      text-decoration-color: var(--accent);
+      text-decoration-thickness: 2px;
+
+      &:hover {
+        color: var(--accent);
+      }
     }
 
     blockquote {
@@ -205,8 +219,9 @@
     code {
       padding: 20px 30px !important;
       border-radius: 20px !important;
-      white-space: pre-wrap !important;
-      word-break: break-all !important;
+      white-space: pre !important;
+      overflow-x: auto !important;
+      word-break: normal !important;
       background: var(--card) !important;
 
       &::selection,

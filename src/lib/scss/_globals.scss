@@ -10,6 +10,7 @@
 :root {
   --background: #1d1d1d;
   --card: #272727;
+  --input: #2c2c2c;
   --text: #fff;
   --subtext: #c0c0c0;
   --accent: #1bf2c2;
@@ -44,11 +45,11 @@ main {
   height: 13px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--card);
+  background: var(--disabled);
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--disabled);
+  background: var(--subtext);
 }
 ::-webkit-scrollbar-thumb:active {
   background: var(--accent);
