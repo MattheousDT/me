@@ -1,23 +1,48 @@
-import preprocess from "svelte-preprocess";
 import adapter from "@sveltejs/adapter-vercel";
+import { readFileSync } from "fs";
+import { mdsvex } from "mdsvex";
+import path from "path";
+import shiki from "shiki";
+import preprocess from "svelte-preprocess";
+import Icons from "unplugin-icons/vite";
+import WindiCSS from "vite-plugin-windicss";
+
+const palenightTheme = JSON.parse(readFileSync(path.join(process.cwd(), "./bin/palenight.json")));
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  // Consult https://github.com/sveltejs/svelte-preprocess
-  // for more information about preprocessors
-  preprocess: preprocess({
-    defaults: {
-      script: "typescript",
-      style: "scss",
-      markup: "html",
-    },
-  }),
+	extensions: [".svelte", ".md"],
+	preprocess: [
+		mdsvex({
+			extensions: [".md"],
+			highlight: {
+				highlighter: async (code, lang) => {
+					const html = (
+						await shiki.getHighlighter({
+							theme: palenightTheme,
+						})
+					)
+						.codeToHtml(code, { lang })
+						.replace(/[{}`]/g, (c) => ({ "{": "&#123;", "}": "&#125;", "`": "&#96;" }[c]))
+						.replace(/\\([trn])/g, "&#92;$1");
 
-  kit: {
-    // hydrate the <div id="svelte"> element in src/app.html
-    target: "#svelte",
-    adapter: adapter(),
-  },
+					return `{@html \`${html}\` }`;
+				},
+			},
+		}),
+		preprocess(),
+	],
+	kit: {
+		adapter: adapter(),
+		vite: {
+			plugins: [
+				Icons({
+					compiler: "svelte",
+				}),
+				WindiCSS(),
+			],
+		},
+	},
 };
 
 export default config;

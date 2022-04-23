@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { enhance } from "$lib/util/form";
   import { onMount } from "svelte";
   import { draw, fly } from "svelte/transition";

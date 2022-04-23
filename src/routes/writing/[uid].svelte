@@ -1,4 +1,4 @@
-<script context="module">
+<script lang="ts" context="module">
   import PrismicDOM from "prismic-dom";
   import htmlSerializer from "$lib/util/htmlSerializer";
   import linkResolver from "$lib/util/linkResolver";
@@ -24,7 +24,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import type { Document } from "@prismicio/client/types/documents";
   import length from "$lib/util/length";
   import ArrowButton from "$lib/components/buttons/arrow_button.svelte";

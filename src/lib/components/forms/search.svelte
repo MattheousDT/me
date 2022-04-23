@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let searchValue: string;
 
   export let value: string;

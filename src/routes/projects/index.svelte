@@ -1,8 +1,8 @@
-<script context="module">
+<script lang="ts" context="module">
   import type { Load } from "@sveltejs/kit";
 
-  export const load: Load = async ({ page }) => {
-    let types = page.query.get("types")?.split(",") ?? [];
+  export const load: Load = async ({ url }) => {
+    let types = url.searchParams.get("types")?.split(",") ?? [];
 
     let query = await api.query(
       [
@@ -24,7 +24,7 @@
   };
 </script>
 
-<script>
+<script lang="ts">
   import { fly } from "svelte/transition";
   import Prismic from "@prismicio/client";
   import api from "$lib/util/api";
@@ -40,7 +40,7 @@
 
   export let query: ApiSearchResponse;
 
-  let promiseResults: Promise<ApiSearchResponse> = null;
+  let promiseResults: Promise<ApiSearchResponse> | null = null;
 
   $: {
     promiseResults = api.query(
@@ -57,7 +57,7 @@
     );
   }
 
-  let types = $page.query.get("types")?.split(",") ?? [];
+  let types = $page.url.searchParams.get("types")?.split(",") ?? [];
   let searchValue = "";
   let liveSearchValue = "";
 
@@ -109,7 +109,7 @@
 <div class="container">
   <div class="row">
     {#await promiseResults then value}
-      {#each value.results as doc, i}
+      <!-- {#each value.results as doc, i}
         <div in:fly={{ y: 20, duration: 250, delay: i * 50 }} class="col-12 col-md-6 col-xl-4">
           <Project
             thumb={doc.data.thumb.url}
@@ -124,7 +124,7 @@
         <div class="col-12">
           <h4 class="error-text">No results found :(</h4>
         </div>
-      {/if}
+      {/if} -->
     {:catch error}
       <div class="col-12">
         <h4 class="error-text">There was an error... Please try again later.</h4>
@@ -133,7 +133,7 @@
 
     <!-- Server Rendered Results -->
     {#if !browser}
-      {#each query.results as doc}
+      <!-- {#each query.results as doc}
         <div class="col-4" style="display: none;">
           <Project
             thumb={doc.data.thumb.url}
@@ -142,7 +142,7 @@
             uid={doc.uid}
           />
         </div>
-      {/each}
+      {/each} -->
 
       {#if query.results_size === 0}
         <div class="col-12">

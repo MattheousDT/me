@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { spring } from "svelte/motion";
   import PlayButton from "./buttons/play_button.svelte";
   import Waveform from "./waveform.svelte";

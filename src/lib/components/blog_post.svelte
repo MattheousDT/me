@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import blogDate from "$lib/util/blog_date";
 
   export let uid: string;

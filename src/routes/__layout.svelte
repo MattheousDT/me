@@ -1,46 +1,57 @@
-<script context="module">
-  import api from "$lib/util/api";
-  import type { Load } from "@sveltejs/kit";
+<script lang="ts" context="module">
+	import Footer from "$lib/components/footer.svelte";
+	import Navbar from "$lib/components/navbar.svelte";
+	import type { Load } from "@sveltejs/kit";
+	import { fly, scale } from "svelte/transition";
+	import { expoOut } from "svelte/easing";
+	import "virtual:windi.css";
 
-  export const load: Load = async ({ page }) => {
-    return {
-      props: {
-        key: page.path,
-      },
-    };
-  };
+	export const load: Load = async ({ url }) => {
+		return {
+			props: {
+				key: url.pathname,
+			},
+		};
+	};
 </script>
 
-<script>
-  import "$lib/scss/_grid.scss";
-  import "$lib/scss/_typography.scss";
-  import "$lib/scss/_buttons.scss";
-  import "$lib/scss/_globals.scss";
+<script lang="ts">
+	export let key: string;
 
-  import Navbar from "$lib/components/navbar.svelte";
-  import Footer from "$lib/components/footer.svelte";
-  import { fly } from "svelte/transition";
-
-  export let key: string;
-
-  let keywords = "JavaScript, CSS, front-end, web design";
-  let img = "https://matthewwatt.co.uk/logo.png";
+	let keywords = "JavaScript, CSS, front-end, web design";
+	let img = "https://matthewwatt.co.uk/logo.png";
 </script>
 
 <svelte:head>
-  <meta name="keywords" content={keywords} />
-  <meta name="content" content={keywords} />
-  <meta name="property" content={keywords} />
+	<meta name="keywords" content={keywords} />
+	<meta name="content" content={keywords} />
+	<meta name="property" content={keywords} />
 
-  <meta property="og:image" content={img} />
-  <meta name="twitter:image" content={img} />
-  <meta name="twitter:card" content="summary" />
+	<meta property="og:image" content={img} />
+	<meta name="twitter:image" content={img} />
+	<meta name="twitter:card" content="summary" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Pragati+Narrow:wght@400;700&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
 
 <Navbar />
 {#key key}
-  <main in:fly={{ y: -10, duration: 250, delay: 250 }} out:fly={{ y: -10, duration: 250 }}>
-    <slot />
-  </main>
+	<main
+		in:fly={{ x: 10, delay: 600, duration: 500, easing: expoOut }}
+		out:fly={{ x: -10, delay: 0, duration: 500, easing: expoOut }}
+	>
+		<slot />
+	</main>
 {/key}
 <Footer />
+
+<style lang="scss" global>
+	body {
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+</style>

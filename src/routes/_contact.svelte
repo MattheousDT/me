@@ -1,7 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
 </script>
 
-<script>
+<script lang="ts">
   import ContactForm from "$lib/components/contact_form.svelte";
 </script>
 

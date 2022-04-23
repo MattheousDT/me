@@ -23,11 +23,12 @@ export interface IProject {
 }
 
 export const prismicToProject = (doc: Document): IProject => ({
-  uid: doc.uid,
+  uid: doc.uid!,
   title: doc.data.title,
   date: new Date(doc.data.date),
   logo: doc.data.logo?.url,
   thumb: doc.data.thumb.url,
+  // @ts-ignore
   type: ProjectType[doc.data.type],
   link: doc.data.link?.url,
   description: doc.data.description,

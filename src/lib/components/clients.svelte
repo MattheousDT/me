@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   const clients: Record<string, [string, string]> = {
     tni: ["Tourism Northern Ireland", "https://tourismni.com"],
     erm: ["Environmental Resources Management", "https://erm.com"],

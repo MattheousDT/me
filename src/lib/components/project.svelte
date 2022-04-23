@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let uid: string;
   export let thumb: string;
   export let type: string;
