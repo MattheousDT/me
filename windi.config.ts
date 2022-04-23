@@ -56,8 +56,8 @@ export default defineConfig({
 			center: true,
 		},
 		fontFamily: {
-			sans: ["Pragati Narrow", "Lato", "sans"],
-			heading: ["Pragati Narrow", "Lato", "sans"],
+			sans: ["Open Sans", "Lato", "sans-serif"],
+			heading: ["Pragati Narrow", "Lato", "sans-serif"],
 			mono: ["Fira Code", "Consolas", "monospace"],
 		},
 		backgroundImage: {

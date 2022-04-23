@@ -1,5 +1,8 @@
 <script lang="ts">
-	import Hero from "$lib/components/hero.svelte";
+	import Clients from "$lib/components/home/clients.svelte";
+	import Hero from "$lib/components/home/hero.svelte";
+
+	import Projects from "$lib/components/home/projects.svelte";
 </script>
 
 <svelte:head>
@@ -7,3 +10,5 @@
 </svelte:head>
 
 <Hero />
+<Clients />
+<Projects />

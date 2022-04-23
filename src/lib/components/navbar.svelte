@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { crossfade } from "svelte/transition";
 	import { expoOut } from "svelte/easing";
+	import { crossfade } from "svelte/transition";
 
 	const [send, receive] = crossfade({
 		duration: (d) => Math.sqrt(d * 10000),
@@ -27,7 +27,7 @@
 					link === "/" ? $page.url.pathname === link : $page.url.pathname.startsWith(link)}
 				<li role="none" class="relative">
 					<a
-						class="relative mx-5 no-underline uppercase transition-colors text-lg font-bold"
+						class="relative mx-5 no-underline uppercase transition-colors text-lg font-bold font-heading"
 						role="menuitem"
 						class:text-sky-800={isActive}
 						class:text-sky-300={!isActive}
