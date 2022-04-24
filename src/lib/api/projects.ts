@@ -1,3 +1,5 @@
+import { getLastArrayItem } from "$lib/util/polyfill";
+
 export type ProjectMetadata = {
 	client: string;
 	title: string;
@@ -19,9 +21,8 @@ export const getAllProjects = async (
 	const res: ProjectPost[] = await Promise.all(
 		Object.entries(all).map(async ([file, md]) => {
 			const content = await md();
-
 			return {
-				slug: file.split("/").at(-1)?.replace(".md", "")!,
+				slug: getLastArrayItem(file.split("/"))?.replace(".md", "")!,
 				metadata: content.metadata,
 				body: body ? content.default : null,
 			};

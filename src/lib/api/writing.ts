@@ -1,3 +1,5 @@
+import { getLastArrayItem } from "$lib/util/polyfill";
+
 export type WritingMetadata = {
 	title: string;
 	cover: string;
@@ -15,7 +17,7 @@ export const getAllWriting = async (body = false): Promise<WritingPost[]> => {
 			const content = await md();
 
 			return {
-				slug: file.split("/").at(-1)?.replace(".md", "")!,
+				slug: getLastArrayItem(file.split("/"))?.replace(".md", "")!,
 				metadata: content.metadata,
 				body: body ? content.default : null,
 			};
