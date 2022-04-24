@@ -41,6 +41,11 @@ const config = {
 				}),
 				WindiCSS(),
 			],
+			server: {
+				fs: {
+					allow: ["content"],
+				},
+			},
 		},
 	},
 };

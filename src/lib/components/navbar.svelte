@@ -17,7 +17,7 @@
 </script>
 
 <nav class="h-[5.625rem] flex items-center z-50 container">
-	<div class="flex justify-between items-center border-b border-sky-100 h-full w-full py-5">
+	<div class="flex justify-between items-center h-full w-full py-5">
 		<a class="h-full" href="/">
 			<img src="/svg/logo.svg" alt="Go home" />
 		</a>

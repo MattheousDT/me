@@ -18,10 +18,12 @@
 		<h2 class="font-medium text-xl text-center text-sky-700 mb-8">
 			I've previously worked with some pretty cool brands...
 		</h2>
-		<div class="grid grid-cols-5 gap-x-4 gap-y-10 justify-center mx-auto w-5xl max-w-full">
+		<div
+			class="grid gap-x-4 gap-y-10 justify-center mx-auto w-5xl max-w-full grid-cols-3 lg:grid-cols-5"
+		>
 			{#each Object.entries(clients) as [code, [name, url]]}
 				<a href={url} target="_blank">
-					<img src="/svg/clients/client-{code}.svg" alt={name} class="w-full h-full" height={80} />
+					<img src="/svg/clients/client-{code}.svg" alt={name} class="w-full h-full" height={86} />
 				</a>
 			{/each}
 		</div>

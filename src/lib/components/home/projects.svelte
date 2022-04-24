@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { ProjectPost } from "$lib/api/projects";
+
 	import { onDestroy, onMount } from "svelte";
 	import { expoOut } from "svelte/easing";
 	import { fade, fly, scale } from "svelte/transition";
@@ -7,56 +9,23 @@
 	import IconArrowUp from "~icons/carbon/arrow-up";
 	import IconSearch from "~icons/carbon/search";
 
-	let articles = [
-		{
-			client: "Deskpro",
-			title: "Centralising thousands of payments and subscriptions",
-			abstract:
-				"How Deskpro increased their revenue by creating a hub for managing add-ons, invoices, and subscriptions",
-			link: "/projects/deskpro-billing",
-			image: "/img/hero/deskpro-billing.jpg",
-		},
-		{
-			client: "Tourism NI",
-			title: "Building the Hub for Northern Irish tourism",
-			abstract:
-				"Centralising a wealth of information, advice, and events for the Northern Ireland tourism sector",
-			link: "/projects/tni-thehub",
-			image:
-				"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Funesco.org.uk%2Fwp-content%2Fuploads%2F2020%2F06%2Fgiantscauseway4.jpg&f=1&nofb=1",
-		},
-		{
-			client: "ERM",
-			title: "Visualising environmental sustainability",
-			abstract: "How ERM plan to shape a sustainable future",
-			link: "/projects/erm-2020",
-			image:
-				"https://images.prismic.io/matthewwatt/5d9e69f2-fa19-4336-a9b1-650909290bd2_grass-close-up-header.jpg",
-		},
-		{
-			client: "Lucid Houses",
-			title: "Something something renewable energy",
-			link: "/projects/lucid",
-			image:
-				"https://images.prismic.io/matthewwatt/b0b093fb-f34a-46b0-9f96-daf3f25e3b2f_Lucid_House_Master_4K_OVERLAYS+2.jpg",
-		},
-	];
+	export let projects: ProjectPost[];
 
 	let autoplaySpeed = 8000;
 	let direction = 0;
 	let current = 0;
-	$: article = articles[current];
+	$: project = projects[current];
 
 	let decrement = () => {
 		direction = -1;
-		current = current === 0 ? articles.length - 1 : current - 1;
+		current = current === 0 ? projects.length - 1 : current - 1;
 		clearInterval(interval);
 		interval = setInterval(increment, autoplaySpeed);
 	};
 
 	let increment = () => {
 		direction = 1;
-		current = current === articles.length - 1 ? 0 : current + 1;
+		current = current === projects.length - 1 ? 0 : current + 1;
 		clearInterval(interval);
 		interval = setInterval(increment, autoplaySpeed);
 	};
@@ -73,8 +42,8 @@
 </script>
 
 <svelte:head>
-	{#each articles as { image }}
-		<link rel="preload" as="image" href={image} />
+	{#each projects as { metadata }}
+		<link rel="preload" as="image" href={metadata.cover} />
 	{/each}
 </svelte:head>
 
@@ -85,35 +54,35 @@
 		</h2>
 		<div class="flex items-center w-full mb-4 h-[1em] w-full relative">
 			<span class="w-24 max-w-full bg-pink h-[1em]" />
-			{#key article}
+			{#key project}
 				<p
 					in:fade={{ delay: 200, duration: 800, easing: expoOut }}
-					out:fade={{ duration: 800, delay: 0, easing: expoOut }}
+					out:fade|local={{ duration: 800, delay: 0, easing: expoOut }}
 					class="font-heading text-xl text-pink font-bold uppercase flex-1 absolute left-26"
 				>
-					{article.client}
+					{project.metadata.client}
 				</p>
 			{/key}
 		</div>
 		<div class="font-heading text-6xl h-[2em]">
-			{#key article}
+			{#key project}
 				<h1
 					in:fly={{ y: 16 * direction, delay: 200, duration: 800, easing: expoOut }}
-					out:fly={{ y: -16 * direction, duration: 800, delay: 0, easing: expoOut }}
+					out:fly|local={{ y: -16 * direction, duration: 800, delay: 0, easing: expoOut }}
 					class="text-sky-800 font-bold uppercase w-3xl max-w-full absolute"
 				>
-					{article.title}
+					{project.metadata.title}
 				</h1>
 			{/key}
 		</div>
 		<div class="text-lg h-[3em] mt-4">
-			{#key article}
+			{#key project}
 				<p
 					in:fly={{ y: 16 * direction, delay: 200, duration: 800, easing: expoOut }}
-					out:fly={{ y: -16 * direction, duration: 800, delay: 0, easing: expoOut }}
-					class="text-sky-700 w-xl max-w-full absolute"
+					out:fly|local={{ y: -16 * direction, duration: 800, delay: 0, easing: expoOut }}
+					class="text-sky-700 font-medium w-xl max-w-full absolute"
 				>
-					{article.abstract}
+					{project.metadata.description}
 				</p>
 			{/key}
 		</div>
@@ -121,13 +90,13 @@
 	<div class="2xl:container">
 		<div class="w-full h-lg flex mt-10 2xl:w-[calc(100%+5.5rem)] 2xl:max-w-screen 2xl:-mx-11">
 			<div class="relative flex-1 overflow-hidden">
-				{#key article}
+				{#key project}
 					<img
 						in:scale={{ delay: 0, duration: 1000, start: 1.2, easing: expoOut }}
-						out:fade={{ duration: 0, delay: 1100 }}
+						out:fade|local={{ duration: 0, delay: 1100 }}
 						draggable={false}
 						class="object-cover h-full w-full absolute left-0 top-0 select-none"
-						src={article.image}
+						src={project.metadata.cover}
 						alt=""
 					/>
 				{/key}
@@ -135,7 +104,7 @@
 			<div class="w-64 flex flex-col flex-shrink-0">
 				<a
 					sveltekit:prefetch
-					href={article.link}
+					href="/projects/{project.slug}"
 					class="bg-pink flex-1 flex items-center justify-center text-white transition-colors hover:bg-pink-800 active:bg-pink-900"
 				>
 					<IconSearch width="5rem" height="5rem" />
@@ -166,9 +135,9 @@
 
 			<div
 				class="mx-5 grid gap-5"
-				style="grid-template-rows: repeat({articles.length}, minmax(0, 1fr))"
+				style="grid-template-rows: repeat({projects.length}, minmax(0, 1fr))"
 			>
-				{#each articles as _, i}
+				{#each projects as _, i}
 					<div class="relative bg-pink-50 h-full w-1 overflow-hidden">
 						<span
 							class="absolute left-0 top-0 w-full bg-pink"

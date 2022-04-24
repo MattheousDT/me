@@ -2,8 +2,8 @@
 	import Footer from "$lib/components/footer.svelte";
 	import Navbar from "$lib/components/navbar.svelte";
 	import type { Load } from "@sveltejs/kit";
-	import { fly, scale } from "svelte/transition";
 	import { expoOut } from "svelte/easing";
+	import { fly } from "svelte/transition";
 	import "virtual:windi.css";
 
 	export const load: Load = async ({ url }) => {
@@ -41,8 +41,8 @@
 <Navbar />
 {#key key}
 	<main
-		in:fly={{ x: 10, delay: 600, duration: 500, easing: expoOut }}
-		out:fly={{ x: -10, delay: 0, duration: 500, easing: expoOut }}
+		in:fly={{ x: 10, delay: 500, duration: 500, easing: expoOut }}
+		out:fly={{ x: -10, duration: 500, easing: expoOut }}
 	>
 		<slot />
 	</main>

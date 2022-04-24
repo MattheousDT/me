@@ -1,9 +1,6 @@
-<script lang="ts">
-</script>
-
 <section class="py-20">
 	<div class="container text-center">
-		<h1 class="font-heading text-6xl text-sky-800 font-bold uppercase mb-3">
+		<h1 class="font-heading text-8xl text-sky-800 font-bold uppercase mb-3">
 			Hey, I'm <span class="text-pink">Matt</span>
 		</h1>
 		<h2 class="font-medium text-2xl text-sky-700 mb-8">

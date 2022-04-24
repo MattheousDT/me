@@ -1,234 +1,39 @@
-<script lang="ts" context="module">
-  import type { Load } from "@sveltejs/kit";
-
-  export const load: Load = async ({ url }) => {
-    let types = url.searchParams.get("types")?.split(",") ?? [];
-
-    let query = await api.query(
-      [
-        Prismic.Predicates.at("document.type", "project"),
-        Prismic.Predicates.any("my.project.type", types),
-      ],
-      {
-        fetch: ["project.title", "project.type", "project.thumb"],
-        orderings: "[my.project.date desc]",
-        pageSize: 12,
-      }
-    );
-
-    return {
-      props: {
-        query,
-      },
-    };
-  };
-</script>
-
 <script lang="ts">
-  import { fly } from "svelte/transition";
-  import Prismic from "@prismicio/client";
-  import api from "$lib/util/api";
-  import type ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
-  import { projectTypeToString } from "$lib/util/transfomers";
-  import { ProjectType } from "$lib/util/transfomers";
-  import Project from "$lib/components/project.svelte";
-  import Multiselect from "$lib/components/forms/multiselect.svelte";
-  import { browser } from "$app/env";
-  import Search from "$lib/components/forms/search.svelte";
-  import ProjectSkeleton from "$lib/components/project_skeleton.svelte";
-  import { page } from "$app/stores";
+	import type { ProjectPost } from "$lib/api/projects";
 
-  export let query: ApiSearchResponse;
-
-  let promiseResults: Promise<ApiSearchResponse> | null = null;
-
-  $: {
-    promiseResults = api.query(
-      [
-        Prismic.Predicates.at("document.type", "project"),
-        Prismic.Predicates.any("my.project.type", types),
-        searchValue && Prismic.Predicates.fulltext("document", searchValue),
-      ],
-      {
-        fetch: ["project.title", "project.type", "project.thumb"],
-        orderings: "[my.project.date desc]",
-        pageSize: 12,
-      }
-    );
-  }
-
-  let types = $page.url.searchParams.get("types")?.split(",") ?? [];
-  let searchValue = "";
-  let liveSearchValue = "";
-
-  function resetFilters() {
-    liveSearchValue = "";
-    searchValue = "";
-    types = [];
-  }
+	export let projects: ProjectPost[];
 </script>
 
 <svelte:head>
-  <title>Projects | Matthew Watt</title>
+	<title>Projects | Matthew Watt</title>
 </svelte:head>
 
-<header>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1>Projects</h1>
-        <p>
-          A collection of my work from over the years. The work included here is only work I have
-          played a substantial role in. New projects being added as I go.
-        </p>
-
-        <div class="filters">
-          <Search bind:value={liveSearchValue} bind:searchValue />
-          <Multiselect
-            options={[
-              { friendly: "Web Development", value: ProjectType.web },
-              { friendly: "UI/UX Design", value: ProjectType.design },
-              { friendly: "Music Production", value: ProjectType.music },
-            ]}
-            bind:selected={types}
-          />
-          <button
-            on:click={resetFilters}
-            class="button"
-            disabled={types.length == 0 && searchValue === ""}
-          >
-            Clear Filters
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-<img class="swoosh" src="/svg/project_listing_swoosh.svg" alt="" />
-
-<div class="container">
-  <div class="row">
-    {#await promiseResults then value}
-      <!-- {#each value.results as doc, i}
-        <div in:fly={{ y: 20, duration: 250, delay: i * 50 }} class="col-12 col-md-6 col-xl-4">
-          <Project
-            thumb={doc.data.thumb.url}
-            title={doc.data.title}
-            type={projectTypeToString(ProjectType[doc.data.type])}
-            uid={doc.uid}
-          />
-        </div>
-      {/each}
-
-      {#if value.results_size === 0}
-        <div class="col-12">
-          <h4 class="error-text">No results found :(</h4>
-        </div>
-      {/if} -->
-    {:catch error}
-      <div class="col-12">
-        <h4 class="error-text">There was an error... Please try again later.</h4>
-      </div>
-    {/await}
-
-    <!-- Server Rendered Results -->
-    {#if !browser}
-      <!-- {#each query.results as doc}
-        <div class="col-4" style="display: none;">
-          <Project
-            thumb={doc.data.thumb.url}
-            title={doc.data.title}
-            type={projectTypeToString(ProjectType[doc.data.type])}
-            uid={doc.uid}
-          />
-        </div>
-      {/each} -->
-
-      {#if query.results_size === 0}
-        <div class="col-12">
-          <h4 class="error-text">No results found :(</h4>
-        </div>
-      {/if}
-    {/if}
-  </div>
+<div class="container my-20">
+	<div class="mb-8">
+		<h1 class="font-heading text-5xl lg:text-6xl text-sky-800 font-bold uppercase w-3xl max-w-full">
+			Projects
+		</h1>
+		<big class="text-lg mt-4 text-sky-700 font-medium w-xl max-w-full">
+			A collection of my work from over the years.
+			<br />
+			New projects being added as I go.
+		</big>
+	</div>
+	<div class="grid grid-cols-3 gap-x-8 gap-y-16">
+		{#each projects as { metadata, slug }}
+			<article class="group">
+				<a href="/projects/{slug}">
+					<img class="h-60 w-full object-cover" src={metadata.cover} alt="" height={240} />
+					<h2
+						class="text-sky-800 group-hover:text-pink font-bold font-heading uppercase text-xl mt-5"
+					>
+						{metadata.title}
+					</h2>
+					<p class="text-sky-700">
+						{metadata.description}
+					</p></a
+				>
+			</article>
+		{/each}
+	</div>
 </div>
-
-<style lang="scss">
-  @import "../../lib/scss/mixins";
-
-  header {
-    padding: 112px 0 60px;
-
-    @include media-down(md) {
-      padding: 60px 0;
-    }
-
-    p {
-      max-width: 714px;
-      margin-bottom: 60px;
-    }
-  }
-
-  h1 {
-    margin: 0 0 20px;
-  }
-
-  .swoosh {
-    pointer-events: none;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 551px;
-    object-fit: cover;
-    object-position: 20%;
-    user-select: none;
-
-    @include media-down(lg) {
-      margin-top: -60px;
-    }
-
-    @include media-down(md) {
-      margin-top: -160px;
-    }
-
-    @media (min-width: 1920px) {
-      object-fit: cover;
-      height: auto !important;
-      object-position: center;
-    }
-  }
-
-  .filters {
-    display: flex;
-    margin: 0 -10px;
-    :global > * {
-      margin-left: 10px;
-      margin-right: 10px;
-
-      @include media-down(lg) {
-        flex: 2;
-      }
-    }
-
-    button {
-      @include media-down(lg) {
-        flex: 1;
-      }
-    }
-
-    @include media-down(sm) {
-      flex-direction: column;
-      margin: 0;
-
-      :global > * {
-        max-width: none !important;
-        width: 100%;
-        margin: 0 0 20px;
-      }
-    }
-  }
-
-  .error-text {
-    text-align: center;
-  }
-</style>
